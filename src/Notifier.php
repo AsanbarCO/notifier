@@ -176,6 +176,34 @@ class Notifier
     }
 
     /**
+     * static function to set readAll notification
+     *
+     * @param string|integer $identifier
+     * @return bool
+     */
+    public static function readAll($identifier): bool
+    {
+        $notifications = Notification::where(function($q) use ($identifier) {
+                $q->where('user_id', $identifier);
+                $q->orWhere('identifier', $identifier);
+            })
+            ->whereNull('read_at')
+            ->get();
+
+
+        if (empty($notifications)) {
+            return false;
+        }
+
+        foreach($notifications as $notification) {
+            $notification->read_at = date('Y-m-d H:i:s');
+            $notification->update();
+        }
+
+        return true;
+    }
+
+    /**
      * static function to get read notifications
      *
      * @param mixed|null $identifier
