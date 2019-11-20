@@ -140,10 +140,12 @@ class SMSStrategy implements NotificationInterface
         if ($finalResult['success_count'] == 0) {
             throw new SendSMSFailedException(
                 "Notifier: Sending SMS failed",
-                ", Text: " . $this->message,
                 $this->numbers,
-                $response['response']
+                "server error :(",
+                ", Text: " . $this->message,
+                $this->providerName
             );
+
         }
 
         return $finalResult;

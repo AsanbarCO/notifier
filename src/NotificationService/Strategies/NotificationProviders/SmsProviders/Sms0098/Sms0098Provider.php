@@ -86,17 +86,15 @@ class Sms0098Provider extends SmsAbstract
 
     private function isSuccess($response): bool
     {
+        $status = trim(explode('<!DOCTYPE html PUBLIC', $response->getBody()->getContents())[0]); //Becarefull never cast it
+
         return $response->getStatusCode() == 200
             && (
             (
-                property_exists($response, 'code')
-                && $response->code == 0
+                $status == 0
             )
-            ||
-            (
-                property_exists($response, 'Code')
-                && $response->Code == 0
-            )
+
         );
+
     }
 }
