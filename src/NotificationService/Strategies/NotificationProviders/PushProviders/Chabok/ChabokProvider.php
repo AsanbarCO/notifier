@@ -29,7 +29,7 @@ class ChabokProvider extends PushAbstract
         $ttl      = ($expireAt !== null ? $expireAt->diffInSeconds(Carbon::now()) : 0);
 
         foreach ($tokens as $key => $token) {
-            $messages[$key]         = $this->getMessage($content, $title, $extra, $ttl);
+            $messages[$key]         = $this->getMessage($title, $content, $extra, $ttl);
             $messages[$key]["user"] = $token;
         }
 
